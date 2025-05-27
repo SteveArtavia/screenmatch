@@ -1,18 +1,37 @@
 package com.aluracursos.screenmatch.model;
 
 import com.aluracursos.screenmatch.service.ConsultaHuggingFaceHelsinki;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "series")
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    // Indica que no pueden haber titulos repetidos
+    @Column(unique = true)
     private String titulo;
     private Integer totalTemporadas;
     private Double evaluacion;
     private String poster;
+
+    @Enumerated(EnumType.STRING)
     private Categoria genero;
     private String actores;
     private String sinopsis;
 
+    // Otros datos con los que tiene relacion esta tabla
+    @Transient
+    private List<Episodio> episodios;
+
+    // Todas las entidades deben tener un constructor predeterminado
+    public Serie(){}
+    
     public Serie(DatosSerie datosSerie){
         this.titulo = datosSerie.titulo();
         this.totalTemporadas = datosSerie.totalTemporadas();
@@ -33,6 +52,43 @@ public class Serie {
                 ", genero=" + genero +
                 ", actores='" + actores + '\'' +
                 ", sinopsis='" + sinopsis + '\'';
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setTotalTemporadas(Integer totalTemporadas) {
+        this.totalTemporadas = totalTemporadas;
+    }
+
+    public void setEvaluacion(Double evaluacion) {
+        this.evaluacion = evaluacion;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public void setGenero(Categoria genero) {
+        this.genero = genero;
+    }
+
+    public void setActores(String actores) {
+        this.actores = actores;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
+
+
+    public Long getId() {
+        return Id;
     }
 
     public String getTitulo() {
