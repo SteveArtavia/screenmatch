@@ -26,7 +26,8 @@ public class Serie {
     private String sinopsis;
 
     // Otros datos con los que tiene relacion esta tabla
-    @Transient
+//    @Transient (Transient lo ponia cuando no queria tomar en cuenta estos datos)
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios;
 
     // Todas las entidades deben tener un constructor predeterminado
@@ -51,7 +52,17 @@ public class Serie {
                 ", poster='" + poster + '\'' +
                 ", genero=" + genero +
                 ", actores='" + actores + '\'' +
-                ", sinopsis='" + sinopsis + '\'';
+                ", sinopsis='" + sinopsis + '\'' +
+                        ", episodios='" + episodios + '\'';
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        episodios.forEach(e -> e.setSerie(this));
+        this.episodios = episodios;
     }
 
     public void setId(Long id) {
