@@ -156,14 +156,16 @@ public class Principal {
 
     private void buscarPorMaximoDeTemporadasEvaluacion(){
         System.out.println("Escribe el numero de temporadas maximo");
-        var maximoTemporadas = teclado.nextLine();
+        var totalTemporadas = teclado.nextInt();
 
         System.out.println("Escribe la evaluacion minima");
-        var evaluacionMinima = teclado.nextDouble();
+        var evaluacion = teclado.nextDouble();
 
-        List<Serie> seriesPorTemporadasEvaluacion = repository.findByTotalTemporadasGreaterThanAndEvaluacionGreaterThan(Integer.valueOf(maximoTemporadas), evaluacionMinima);
+//        List<Serie> seriesPorTemporadasEvaluacion = repository.findByTotalTemporadasGreaterThanAndEvaluacionGreaterThan(Integer.valueOf(maximoTemporadas), evaluacionMinima);
 
-        seriesPorTemporadasEvaluacion.forEach(System.out::println);
+        List<Serie> filtroSeries = repository.seriesPorTemporadaYEvaluacion(totalTemporadas, evaluacion);
+
+        filtroSeries.forEach(System.out::println);
     }
 
 
