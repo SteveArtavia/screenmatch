@@ -1,12 +1,15 @@
 package com.aluracursos.screenmatch.service;
 
+import com.aluracursos.screenmatch.dto.EpisodioDTO;
 import com.aluracursos.screenmatch.dto.SerieDTO;
+import com.aluracursos.screenmatch.model.Categoria;
 import com.aluracursos.screenmatch.model.Serie;
 import com.aluracursos.screenmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // Una clase Service se encarga de manejar todos los metodos que trabajan las reglas de negocio
@@ -29,9 +32,44 @@ public class SerieService {
     public List<SerieDTO> convierteDatos(List<Serie> serie){
        return serie.stream()
                 // Por cada serie que tengo, quiero crear un nuevo DTO que contenga solo la información que necesito
-                .map(s -> new SerieDTO(s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(), s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis()))
+                .map(s -> new SerieDTO(s.getId(),s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(), s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis()))
 
                 // Convierte los datos nuevamente a una List
                 .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerLanzamientosMasRecientes(){
+        return convierteDatos(repository.lanzamientosMasRecientes());
+    }
+
+    public SerieDTO obtenerPorId(Long id){
+        Optional<Serie> serie = repository.findById(id);
+        if(serie.isPresent()){
+            Serie s = serie.get();
+            return new SerieDTO(s.getId(),s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(), s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis());
+        }
+        return null;
+    }
+
+    public List<EpisodioDTO> obtenerTodasLasTemporadas(Long id){
+        Optional<Serie> serie = repository.findById(id);
+        if(serie.isPresent()){
+            Serie s = serie.get();
+            return s.getEpisodios().stream()
+                    .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public List<EpisodioDTO> obtenerTemporadaPorNumero(Long id, Integer numeroTemporada){
+        return repository.obtenerTemporadaPorNumero(id, numeroTemporada).stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerSeriesPorCategoria(String genero){
+        Categoria categoria = Categoria.fromEspanol(genero);
+        return convierteDatos(repository.findByGenero(categoria));
     }
 }
