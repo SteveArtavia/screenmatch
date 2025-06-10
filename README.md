@@ -1,7 +1,7 @@
 # Screenmatch - API RESTful con Java Spring Boot
 
-**Screenmatch** es una API RESTful desarrollada con Java y Spring Boot como parte del curso de Alura Latam.  
-Permite consultar, guardar y administrar información sobre películas y series consumiendo datos desde la API de [OMDb](https://www.omdbapi.com/).
+**Screenmatch** es una API RESTful desarrollada con Java y Spring Boot. 
+Permite consultar, guardar y administrar información sobre series consumiendo datos desde la API de [OMDb](https://www.omdbapi.com/).
 
 La API se conecta a un **frontend** para mostrar los datos al usuario final, permitiendo así una arquitectura basada en separación de responsabilidades (backend y frontend desacoplados).
 
@@ -23,7 +23,7 @@ La API se conecta a un **frontend** para mostrar los datos al usuario final, per
 
 ## Funcionalidades principales
 
-- Exponer una API RESTful con endpoints para consultar y guardar información de películas y series.
+- Exponer una API RESTful con endpoints para consultar información de series.
 - Conexión a la API pública de OMDb para obtener los datos.
 - Almacenamiento de datos en base de datos relacional.
 - Endpoint para recibir peticiones del frontend.
