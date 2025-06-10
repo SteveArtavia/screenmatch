@@ -39,6 +39,9 @@ La API se conecta a un **frontend** para mostrar los datos al usuario final, per
 | GET    | `/series`                 | Lista todas las series guardadas |
 | GET    | `/series/{id}`            | Devuelve los detalles de una serie|
 | GET    | `/series/lanzamientos`                 | Obtener lanzamientos mas recientes |
-| POST   | `/series/top5`                 | Obtiene el top 5 de mejores series |
+| GET   | `/series/top5`                 | Obtiene el top 5 de mejores series |
+| GET   | `series/{id}/temporadas/todas`                 | Obtiene todas las temporadas de una serie |
+| GET   | `series/{id}/temporadas/{numeroTemporada}`                 | Obtiene una temporada especifica de una serie |
+| GET   | `series/categoria/{genero}`                 | Obtiene series por genero |
 
 > Todos los endpoints están disponibles en formato JSON y son consumidos por el frontend.
